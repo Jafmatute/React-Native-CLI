@@ -7,46 +7,68 @@ import {StyleSheet, View, Image, Text, ScrollView} from 'react-native';
 const App = () => {
   return (
     <>
-      <View>
+      <ScrollView>
         <View style={{flexDirection: 'row'}}>
           <Image
             style={styles.banner}
             source={require('./assets/img/bg.jpg')}
           />
         </View>
-      </View>
 
-      <View style={styles.contenedor}>
-        <Text style={styles.titulo}>¿Qué hacer en paris ?</Text>
-        <ScrollView horizontal={true}>
-          <View>
-            <Image
-              style={styles.ciudad}
-              source={require('./assets/img/actividad1.jpg')}
-            />
-          </View>
+        <View style={styles.contenedor}>
+          <Text style={styles.titulo}>¿Qué hacer en paris ?</Text>
+          <ScrollView horizontal={true}>
+            <View>
+              <Image
+                style={styles.ciudad}
+                source={require('./assets/img/actividad1.jpg')}
+              />
+            </View>
 
-          <View>
-            <Image
-              style={styles.ciudad}
-              source={require('./assets/img/actividad2.jpg')}
-            />
-          </View>
+            <View>
+              <Image
+                style={styles.ciudad}
+                source={require('./assets/img/actividad2.jpg')}
+              />
+            </View>
 
+            <View>
+              <Image
+                style={styles.ciudad}
+                source={require('./assets/img/actividad3.jpg')}
+              />
+            </View>
+            <View>
+              <Image
+                style={styles.ciudad}
+                source={require('./assets/img/actividad4.jpg')}
+              />
+            </View>
+          </ScrollView>
+
+          <Text style={styles.titulo}>Los Mejores Alojamientos</Text>
           <View>
-            <Image
-              style={styles.ciudad}
-              source={require('./assets/img/actividad3.jpg')}
-            />
+            <View>
+              <Image
+                style={styles.mejores}
+                source={require('./assets/img/mejores1.jpg')}
+              />
+            </View>
+            <View>
+              <Image
+                style={styles.mejores}
+                source={require('./assets/img/mejores2.jpg')}
+              />
+            </View>
+            <View>
+              <Image
+                style={styles.mejores}
+                source={require('./assets/img/mejores3.jpg')}
+              />
+            </View>
           </View>
-          <View>
-            <Image
-              style={styles.ciudad}
-              source={require('./assets/img/actividad4.jpg')}
-            />
-          </View>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </>
   );
 };
@@ -68,6 +90,12 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
     marginRight: 10,
+  },
+  //sin flexbox
+  mejores: {
+    width: '100%',
+    height: 200,
+    marginVertical: 4,
   },
 });
 
