@@ -18,26 +18,26 @@ const styles = StyleSheet.create({
   contenedor: {
     backgroundColor: 'cornflowerblue',
     flex: 1,
-    //flexDirection: 'row',
-    //flexDirection: 'column',
-    //flexDirection: 'column-reverse',
-    flexDirection: 'row-reverse',
   },
   box_one: {
     padding: 20,
     backgroundColor: 'blue',
+    flex: 1,
   },
   box_two: {
     padding: 20,
     backgroundColor: 'orange',
+    flex: 1,
   },
   box_tre: {
     padding: 20,
     backgroundColor: 'teal',
+    flex: 1,
   },
   box_four: {
     padding: 20,
     backgroundColor: 'navy',
+    flex: 2,
   },
 });
 
