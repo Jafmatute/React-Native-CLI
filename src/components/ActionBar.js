@@ -1,14 +1,19 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-
-export default function ActionBar() {
+import firebase from '../utils/firebase';
+export default function ActionBar(props) {
+  const {showList, setShowList} = props;
   return (
     <View style={styles.viewFooter}>
       <View style={styles.viewClose}>
-        <Text style={styles.text}>Cerrar Sesión</Text>
+        <Text onPress={() => firebase.auth().signOut()} style={styles.text}>
+          Cerrar Sesión
+        </Text>
       </View>
       <View style={styles.viewAdd}>
-        <Text style={styles.text}>Nueva Fecha</Text>
+        <Text style={styles.text} onPress={() => setShowList(!showList)}>
+          {showList ? 'Nueva Fecha ' : 'Regresar'}
+        </Text>
       </View>
     </View>
   );
