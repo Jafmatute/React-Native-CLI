@@ -11,27 +11,39 @@ import firebase from '../utils/firebase';
 
 export default function LoginForm(props) {
   const {changeForm} = props;
+  const [formError, setFormError] = useState({});
   const [formData, setformData] = useState({
     email: '',
     password: '',
   });
   //console.log(changeForm);
   const login = () => {
-    //console.warn('OK');
-    console.log(formData);
+    let errors = {};
+    if (!formData.email || !formData.password) {
+      if (!formData.email) errors.email = true;
+      if (!formData.email) errors.password = true;
+    } else if (!validateEmail(formData.email)) {
+      errors.email = true;
+    } else if (formData.password.length < 6) {
+      errors.password = true;
+    } else {
+      console.warn('Logged!');
+    }
+    setFormError(errors);
+    console.log(errors);
   };
 
   return (
     <>
       <TextInput
-        style={styles.input}
+        style={[styles.input, formError.email && styles.errorInput]}
         placeholder="Correo Electronico"
         placeholderTextColor="#969696"
         onChange={(e) => setformData({...formData, email: e.nativeEvent.text})}
       />
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, formError.password && styles.errorInput]}
         placeholder="Contraseña"
         placeholderTextColor="#969696"
         secureTextEntry={true}
@@ -71,5 +83,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     marginBottom: 20,
+  },
+  errorInput: {
+    borderColor: '#940c0c',
   },
 });
