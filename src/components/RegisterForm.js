@@ -1,12 +1,30 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, TextInput} from 'react-native';
-
+import {validateEmail} from '../utils/validations';
 export default function RegisterForm(props) {
   const {changeForm} = props;
   const [formData, setFormData] = useState(defaultForm);
+  const [formError, setFormError] = useState({});
   //console.log(formData);
   const register = () => {
-    console.log(formData);
+    let errors = {};
+    if (!formData.email || !formData.password || !formData.confirmPassword) {
+      if (!formData.email) errors.email = true;
+      if (!formData.password) errors.password = true;
+      if (!formData.confirmPassword) errors.confirmPassword = true;
+    } else if (!validateEmail(formData.email)) {
+      errors.email = true;
+    } else if (formData.password !== formData.confirmPassword) {
+      errors.password = true;
+      errors.confirmPassword = true;
+    } else if (formData.password.length < 6) {
+      errors.password = true;
+      errors.confirmPassword = true;
+    } else {
+      console.warn('Form corrrect!');
+    }
+    //console.log(errors);
+    setFormError(errors);
   };
   const changeFormRegister = (e, value) => {
     setFormData({
@@ -20,21 +38,21 @@ export default function RegisterForm(props) {
         placeholder="Correo Electronico"
         placeholderTextColor="#969697"
         onChange={(e) => changeFormRegister(e, 'email')}
-        style={styles.input}
+        style={[styles.input, formError.email && styles.errorInput]}
       />
       <TextInput
         placeholder="Contraseña"
         secureTextEntry={true}
         placeholderTextColor="#969697"
         onChange={(e) => changeFormRegister(e, 'password')}
-        style={styles.input}
+        style={[styles.input, formError.password && styles.errorInput]}
       />
       <TextInput
         placeholder="Repetir Contraseña"
         secureTextEntry={true}
         placeholderTextColor="#969697"
         onChange={(e) => changeFormRegister(e, 'confirmPassword')}
-        style={styles.input}
+        style={[styles.input, formError.confirmPassword && styles.errorInput]}
       />
       <TouchableOpacity onPress={register}>
         <Text style={styles.btnText}>Registrarse</Text>
@@ -73,5 +91,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     marginBottom: 20,
+  },
+  errorInput: {
+    borderColor: '#940c0c',
   },
 });
