@@ -11,16 +11,23 @@ import firebase from '../utils/firebase';
 
 export default function LoginForm(props) {
   const {changeForm} = props;
+  const [formData, setformData] = useState({
+    email: '',
+    password: '',
+  });
   //console.log(changeForm);
   const login = () => {
     //console.warn('OK');
+    console.log(formData);
   };
+
   return (
     <>
       <TextInput
         style={styles.input}
         placeholder="Correo Electronico"
         placeholderTextColor="#969696"
+        onChange={(e) => setformData({...formData, email: e.nativeEvent.text})}
       />
 
       <TextInput
@@ -28,6 +35,9 @@ export default function LoginForm(props) {
         placeholder="Contraseña"
         placeholderTextColor="#969696"
         secureTextEntry={true}
+        onChange={(e) =>
+          setformData({...formData, password: e.nativeEvent.text})
+        }
       />
 
       <TouchableOpacity onPress={login}>
