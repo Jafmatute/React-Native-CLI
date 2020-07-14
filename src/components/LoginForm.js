@@ -12,6 +12,7 @@ import firebase from '../utils/firebase';
 export default function LoginForm(props) {
   const {changeForm} = props;
   const [formError, setFormError] = useState({});
+  const [userData, setUserData] = useState({});
   const [formData, setformData] = useState({
     email: '',
     password: '',
@@ -27,10 +28,24 @@ export default function LoginForm(props) {
     } else if (formData.password.length < 6) {
       errors.password = true;
     } else {
-      console.warn('Logged!');
+      //console.warn('Logged!');
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(formData.email, formData.password)
+        .then((response) => {
+          setUserData(response);
+          console.log('Informaciòn del usuario:', response);
+        })
+        .catch((error) => {
+          setFormError({
+            email: true,
+            password: true,
+          });
+          console.log('Inicio de sesión con firebase:', error);
+        });
     }
     setFormError(errors);
-    console.log(errors);
+    //console.log(errors);
   };
 
   return (
