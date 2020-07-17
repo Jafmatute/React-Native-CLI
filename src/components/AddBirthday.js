@@ -16,7 +16,7 @@ export default function AddBirthday(props) {
   const [isDatePickerVisible, setIsDataPickerVisible] = useState(false);
   const [formData, setFormData] = useState({});
   const [formErrors, setFormErrors] = useState({});
-  const {user, setShowList} = props;
+  const {user, setShowList, setReloadData} = props;
 
   //console.log(formData);
   const hiddeDatePicker = () => {
@@ -61,6 +61,7 @@ export default function AddBirthday(props) {
         .add(data)
         .then(() => {
           console.log('OK');
+          setReloadData(true);
           setShowList(true);
         })
         .catch(() => {
