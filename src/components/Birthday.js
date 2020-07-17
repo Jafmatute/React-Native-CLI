@@ -5,6 +5,21 @@ export default function Birthday(props) {
   const {birthday} = props;
   const pasat = birthday.days > 0 ? true : false;
   //console.log(pasat);
+
+  const infoText = () => {
+    if (birthday.days === 0) {
+      return <Text style={{color: '#fff'}}>Es su cumpleaños</Text>;
+    } else {
+      const days = -birthday.days;
+
+      return (
+        <View style={styles.textCurrent}>
+          <Text>{days} </Text>
+          <Text> {days === 1 ? 'Día' : 'Días'} </Text>
+        </View>
+      );
+    }
+  };
   return (
     <TouchableOpacity
       style={[
@@ -15,9 +30,10 @@ export default function Birthday(props) {
           ? styles.actual
           : styles.current,
       ]}>
-      <Text>
+      <Text style={styles.userName}>
         {birthday.name} {birthday.lastname}
       </Text>
+      {pasat ? <Text style={{color: '#fff'}}>Pasado</Text> : infoText()}
     </TouchableOpacity>
   );
 }
@@ -40,5 +56,16 @@ const styles = StyleSheet.create({
   },
   pasat: {
     backgroundColor: '#820000',
+  },
+  userName: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  textCurrent: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    alignItems: 'center',
+    width: 50,
+    justifyContent: 'center',
   },
 });
