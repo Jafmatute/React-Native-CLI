@@ -1,9 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
+import {SafeAreaView, StyleSheet, StatusBar, YellowBox} from 'react-native';
+import {decode, encode} from 'base-64';
 import firebase from './src/utils/firebase';
 import 'firebase/auth';
 import Auth from './src/components/Auth';
 import ListBirthday from './src/components/ListBirthday';
+
+if (!global.btoa) global.btoa = encode;
+if (!global.atob) global.atob = decode;
+YellowBox.ignoreWarnings(['Setting a timer']);
 export default function App() {
   const [user, setUser] = useState(undefined);
   useEffect(() => {
