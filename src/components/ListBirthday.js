@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import moment from 'moment';
 import ActionBar from './ActionBar';
+import Birthday from './Birthday';
 import AddBirthday from './AddBirthday';
 import firebase from '../utils/firebase';
 import 'firebase/firestore';
@@ -65,15 +66,22 @@ export default function ListBirthday(props) {
       } else {
         pasatBirthdayTempArray.push(itemTemp);
       }
-      setBirthday(birthdayTempArray);
-      setPasatBirthday(pasatBirthdayTempArray);
     });
+    setBirthday(birthdayTempArray);
+    setPasatBirthday(pasatBirthdayTempArray);
   };
   return (
     <View style={styles.container}>
       {showList ? (
         <>
-          <Text>List</Text>
+          <ScrollView style={styles.scrollview}>
+            {birthday.map((item, index) => (
+              <Birthday key={index} birthday={item} />
+            ))}
+            {pasatBirthday.map((item, index) => (
+              <Birthday key={index} birthday={item} />
+            ))}
+          </ScrollView>
         </>
       ) : (
         <AddBirthday user={user} setShowList={setShowList} />
@@ -88,5 +96,9 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     height: '100%',
+  },
+  scrollview: {
+    marginBottom: 50,
+    width: '100%',
   },
 });
