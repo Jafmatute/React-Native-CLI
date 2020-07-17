@@ -11,6 +11,7 @@ import moment from 'moment';
 export default function AddBirthday() {
   const [isDatePickerVisible, setIsDataPickerVisible] = useState(false);
   const [formData, setFormData] = useState({});
+  const [formErrors, setFormErrors] = useState({});
   //console.log(formData);
   const hiddeDatePicker = () => {
     setIsDataPickerVisible(false);
@@ -39,7 +40,17 @@ export default function AddBirthday() {
   };
 
   const onSubmit = () => {
-    console.log('datos del formulario', formData);
+    let errors = {};
+    if (!formData.name || !formData.lastname || !formData.dateBirth) {
+      if (!formData.name) errors.name = true;
+      if (!formData.lastname) errors.lastname = true;
+      if (!formData.dateBirth) errors.dateBirth = true;
+
+      console.log('errors:', errors);
+      setFormErrors(errors);
+    } else {
+      console.log('guardar cumpleaños');
+    }
   };
   const showDatePicker = () => {
     setIsDataPickerVisible(true);
@@ -48,18 +59,26 @@ export default function AddBirthday() {
     <>
       <View style={styles.container}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, formErrors.name && {borderColor: '#940c0c'}]}
           placeholder="Nombre"
           placeholderTextColor="#969696"
           onChange={(e) => onChange(e, 'name')}
         />
         <TextInput
-          style={styles.input}
+          style={[
+            styles.input,
+            formErrors.lastname && {borderColor: '#940c0c'},
+          ]}
           placeholder="Apellido"
           placeholderTextColor="#969696"
           onChange={(e) => onChange(e, 'lastname')}
         />
-        <View style={[styles.input, styles.datePicker]}>
+        <View
+          style={[
+            styles.input,
+            styles.datePicker,
+            formErrors.dateBirth && {borderColor: '#940c0c'},
+          ]}>
           <Text
             onPress={showDatePicker}
             style={{
