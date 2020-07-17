@@ -12,10 +12,12 @@ import firebase from '../utils/firebase';
 import 'firebase/firestore';
 firebase.firestore().settings({experimentalForceLongPolling: true});
 const db = firebase.firestore(firebase);
-export default function AddBirthday() {
+export default function AddBirthday(props) {
   const [isDatePickerVisible, setIsDataPickerVisible] = useState(false);
   const [formData, setFormData] = useState({});
   const [formErrors, setFormErrors] = useState({});
+  const {user, setShowList} = props;
+
   //console.log(formData);
   const hiddeDatePicker = () => {
     setIsDataPickerVisible(false);
@@ -55,10 +57,11 @@ export default function AddBirthday() {
       //console.log('guardar cumpleaños');
       const data = formData;
       data.dateBirth.setYear(0);
-      db.collection('birthday')
+      db.collection(user.uid)
         .add(data)
         .then(() => {
           console.log('OK');
+          setShowList(true);
         })
         .catch(() => {
           setFormErrors({name: true, lastname: true, dateBirth: true});
