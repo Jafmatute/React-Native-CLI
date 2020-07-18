@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Alert, View, ScrollView} from 'react-native';
 import moment from 'moment';
 import ActionBar from './ActionBar';
 import Birthday from './Birthday';
@@ -29,12 +29,8 @@ export default function ListBirthday(props) {
           const data = doc.data();
           data.id = doc.id;
           itemArray.push(data);
-          //console.log('documento', doc.data());
-          //console.log(itemArray);
         });
         formatDate(itemArray);
-        //setBirthday(itemArray);
-        //console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -72,16 +68,52 @@ export default function ListBirthday(props) {
     setBirthday(birthdayTempArray);
     setPasatBirthday(pasatBirthdayTempArray);
   };
+
+  const deleteBirthday = (birthday) => {
+    Alert.alert(
+      'Eliminar Cumpleaños',
+      `Estas seguro de eliminar el cumpleaños de: ${birthday.name} ${birthday.lastname}`,
+      [
+        {text: 'Cancelar', style: 'cancel'},
+        {
+          text: 'Eliminar',
+          onPress: () => {
+            //console.log('Eliminando....');
+            db.collection(user.uid)
+              .doc(birthday.id)
+              .delete()
+              .then(() => {
+                setReloadData(true);
+              })
+              .catch((error) => {
+                console.warn(
+                  'Ocurrio un error eliminando el cumpleaños de firebase',
+                );
+              });
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
   return (
     <View style={styles.container}>
       {showList ? (
         <>
           <ScrollView style={styles.scrollview}>
             {birthday.map((item, index) => (
-              <Birthday key={index} birthday={item} />
+              <Birthday
+                key={index}
+                birthday={item}
+                deleteBirthday={deleteBirthday}
+              />
             ))}
             {pasatBirthday.map((item, index) => (
-              <Birthday key={index} birthday={item} />
+              <Birthday
+                key={index}
+                birthday={item}
+                deleteBirthday={deleteBirthday}
+              />
             ))}
           </ScrollView>
         </>

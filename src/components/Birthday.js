@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 export default function Birthday(props) {
-  const {birthday} = props;
+  const {birthday, deleteBirthday} = props;
   const pasat = birthday.days > 0 ? true : false;
   //console.log(pasat);
 
@@ -22,6 +22,7 @@ export default function Birthday(props) {
   };
   return (
     <TouchableOpacity
+      onPress={() => deleteBirthday(birthday)}
       style={[
         styles.card,
         pasat
